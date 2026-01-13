@@ -1,4 +1,6 @@
 .user-profile {
+  max-width: 600px;
+  margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
 }
@@ -7,43 +9,44 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px;
-  margin-bottom: 12px;
+  padding: 12px 16px;
   border-radius: 8px;
-  font-weight: 500;
+  margin: 20px 0;
+  font-weight: bold;
+  text-transform: capitalize;
 }
 
 .status-dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
+  display: inline-block;
 }
 
-.online {
-  background-color: #e8f5e8;
-  color: #2e7d32;
+.status-indicator.online .status-dot {
+  background: #4caf50;
 }
 
-.online .status-dot {
-  background-color: #4caf50;
+.status-indicator.away .status-dot {
+  background: #ff9800;
 }
 
-.offline {
-  background-color: #ffebee;
-  color: #c62828;
+.status-indicator.offline .status-dot {
+  background: #f44336;
 }
 
-.offline .status-dot {
-  background-color: #f44336;
+.status-info {
+  margin: 20px 0;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid;
+  border-left-color: var(--status-color);
 }
 
-.away {
-  background-color: #fff3e0;
-  color: #ef6c00;
-}
-
-.away .status-dot {
-  background-color: #ff9800;
+.availability,
+.message {
+  margin: 8px 0;
 }
 
 .status-controls {

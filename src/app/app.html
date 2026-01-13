@@ -6,9 +6,25 @@
     Status: {{userStatus()}}
   </div>
 
+  <div class="status-info">
+    <div class="notifications">
+      <strong>Notifications:</strong>
+      @if (notificationsEnabled()) { Eneabled } @else { Disabled }
+    </div>
+    <div class="message">
+      <strong>Message:</strong>
+      {{statusMessage()}}
+    </div>
+    <div class="working-hours">
+      <strong>Within Working Hours: </strong>
+      @if (isWithinWorkingHours()) { Yes } @else {No}
+    </div>
+  </div>
+
   <div class="status-controls">
     <!-- TODO: Add (click) and [disabled] bindings -->
     <button (click)="goOnline()">Go Online</button>
+    <button (click)="setAway()">Set Away</button>
     <button (click)="goOffline()">Go Offline</button>
     <button class="toggle-btn" (click)="togglStatus()">Toggle Status</button>
   </div>
