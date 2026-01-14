@@ -1,25 +1,24 @@
-// TODO: Import signal from @angular/core
-import { Component, signal, ChangeDetectionStrategy } from "@angular/core";
-import { ProductCard } from "./product-card/product-card";
+// TODO: Import model from @angular/core
+import { Component, model, ChangeDetectionStrategy } from "@angular/core";
+import { CustomCheckbox } from "./custom-checkbox/custom-checkbox";
 
 @Component({
   selector: "app-root",
-  imports: [ProductCard],
+  imports: [CustomCheckbox],
   templateUrl: "./app.html",
   styleUrl: "./app.css",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  productName = signal("Demo Product");
-  productPrice = signal(99);
-  productAvailable = signal(true);
+  agreedToTerms = model(false);
+  eneableNotifications = model(true);
 
-  updateProduct() {
-    this.productName.set("Update Product");
-    this.productPrice.set(149);
+  toggleTermsFromParent() {
+    this.agreedToTerms.set(!this.agreedToTerms());
   }
 
-  toggleAvailability() {
-    this.productAvailable.set(!this.productAvailable());
+  resetAll() {
+    this.agreedToTerms.set(false);
+    this.eneableNotifications.set(false);
   }
 }

@@ -1,103 +1,70 @@
-/* ProductCard Component Styles */
-.product-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 8px;
-  background: #f9f9f9;
-}
-
-.price {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #2e7d32;
-}
-
-.description {
-  color: #666;
-  margin: 8px 0;
-}
-
-.product-card button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background: #1976d2;
-  color: white;
-}
-
-.status {
-  margin: 8px 0;
-}
-
-.available {
-  color: #4caf50;
-  font-weight: bold;
-}
-
-.unavailable {
-  color: #f44336;
-  font-weight: bold;
-}
-
-/* QuantitySelector Component Styles */
-.quantity-selector {
+/* CustomCheckbox Component Styles */
+.custom-checkbox {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 8px 0;
-}
-
-.quantity {
-  min-width: 30px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.quantity-selector button {
-  width: 32px;
-  height: 32px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: white;
+  margin: 12px 0;
   cursor: pointer;
+  user-select: none;
 }
 
-.quantity-selector button:disabled {
-  background: #f5f5f5;
-  cursor: not-allowed;
+.custom-checkbox input[type='checkbox'] {
+  margin: 0;
+}
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ddd;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+}
+
+.custom-checkbox input[type='checkbox']:checked + .checkmark {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+.custom-checkbox input[type='checkbox']:checked + .checkmark::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  top: -2px;
+  left: 2px;
 }
 
 /* App Component Styles */
 .shopping-app {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
 }
 
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+.demo-section {
   margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
 }
 
-.cart-section {
-  border-top: 1px solid #ddd;
-  padding-top: 20px;
-  margin-top: 20px;
-}
-
-.cart-info {
-  margin: 16px 0;
+.controls {
+  margin: 20px 0;
   padding: 16px;
   background: #f0f8ff;
-  border-radius: 4px;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
 }
 
-.shopping-app button {
+.controls p {
+  margin: 8px 0;
+  font-weight: bold;
+}
+
+button {
   margin-right: 8px;
   padding: 8px 16px;
   border: none;
@@ -105,4 +72,10 @@
   cursor: pointer;
   background: #1976d2;
   color: white;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background: #1565c0;
 }

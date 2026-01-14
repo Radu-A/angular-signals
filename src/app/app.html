@@ -1,17 +1,24 @@
 <div class="shopping-app">
-      <h1>Input Signals Demo</h1>
+  <h1>Custom Checkbox Example</h1>
 
-      <div class="demo-section">
-        <h2>Signal Inputs (Parent → Child)</h2>
-        <p>Data flows down from parent to child via signal inputs:</p>
+  <div class="demo-section">
+    <!-- TODO: Uncomment and add [(checked)] two-way binding -->
 
-        <!-- TODO: Change from static values to dynamic signal values -->
-        <product-card [name]="productName()" [price]="productPrice()" [available]="productAvailable()" />
+    <custom-checkbox [(checked)]="agreedToTerms" label="I agree to the terms" />
 
-        <!-- TODO: Add controls to test reactive updates -->
-        <div class="controls">
-          <button (click)="updateProduct()">Update Product Info</button>
-          <button (click)="toggleAvailability()">Toggle Availability</button>
-        </div>
-      </div>
+    <custom-checkbox
+      [(checked)]="eneableNotifications"
+      label="Enable notifications"
+    />
+
+    <div class="controls">
+      <p>Terms agreed: @if (agreedToTerms()) { Yes } @else {No}</p>
+      <p>Notifications: @if (eneableNotifications()) { Yes } @else {No}</p>
+      <!-- TODO: Add (click) handlers -->
+      <button (click)="toggleTermsFromParent()">
+        Toggle Terms from Parent
+      </button>
+      <button (click)="resetAll()">Reset All</button>
     </div>
+  </div>
+</div>
