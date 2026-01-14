@@ -36,3 +36,29 @@
     <button class="toggle-btn" (click)="togglStatus()">Toggle Status</button>
   </div>
 </div>
+<div>
+      <h2>User Profile Loader</h2>
+
+      <div>
+        <!-- TODO: Add (click) handlers to call loadUser() with appropriate IDs -->
+        <button (click)="loadUser(1)">Load User 1</button>
+        <button (click)="loadUser(2)">Load User 2</button>
+        <button (click)="loadUser(999)">Load Invalid User</button>
+        <!-- TODO: Add (click) handler to call reloadUser() -->
+        <button (click)="reloadUser()">Reload</button>
+      </div>
+
+      <div class="status">
+        @if (isLoading()) {
+          <p>Loading user...</p>
+        } @else if (hasError()) {
+          <p class="error">Error: {{ userResource.error()?.message}}</p>
+        } @else if (userResource.hasValue()) {
+          <div class="user-info">
+            <h3>{{userResource.value().name}}</h3>
+            <p>{{userResource.value().email}}</p>
+          </div>
+        }
+        <p>Click a button to load user data</p>
+      </div>
+    </div>

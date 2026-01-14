@@ -4,8 +4,11 @@ import {
   signal,
   computed,
   linkedSignal,
+  resource,
   ChangeDetectionStrategy,
 } from "@angular/core";
+
+import { loadUser } from "./user-api";
 
 @Component({
   selector: "app-root",
@@ -15,7 +18,6 @@ import {
 })
 export class App {
   userStatus = signal<"online" | "away" | "offline">("offline");
-
   notificationsEnabled = linkedSignal(() => this.userStatus() === "online");
   statusMessage = computed(() => {
     const status = this.userStatus();
@@ -34,6 +36,14 @@ export class App {
     const isWeekday = now.getDay() > 0 && now.getDay() < 6;
     return isWorkingHour && isWeekday && this.userStatus() != "offline";
   });
+
+  userId = signal(1);
+  userResource = resource({
+    params: () => ({ id: this.userId() }),
+    loader: (params) => loadUser(params.params.id),
+  });
+  isLoading = computed(() => this.userResource.status() === "loading");
+  hasError = computed(() => this.userResource.status() === "error");
 
   goOnline() {
     this.userStatus.set("online");
@@ -64,5 +74,13 @@ export class App {
 
   toggleNotifications() {
     this.notificationsEnabled.set(!this.notificationsEnabled());
+  }
+
+  loadUser(id: number) {
+    this.userId.set(id);
+  }
+
+  reloadUser() {
+    this.userResource.reload();
   }
 }
