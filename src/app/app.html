@@ -1,64 +1,17 @@
-<div class="user-profile">
-  <h1>User Dashboard</h1>
-  <!-- TODO: Update class binding and display userStatus() -->
-  <div class="status-indicator" [class]="userStatus()">
-    <span class="status-dot"></span>
-    Status: {{userStatus()}}
-  </div>
+<div class="shopping-app">
+      <h1>Input Signals Demo</h1>
 
-  <div class="status-info">
-    <div class="notifications">
-      <strong>Notifications:</strong>
-      @if (notificationsEnabled()) { Eneabled } @else { Disabled }
-      <button class="override-btn" (click)="toggleNotifications()">
-        @if (notificationsEnabled()) {
-          Disable
-        } @else {
-          Enable
-        }
-      </button>
-    </div>
-    <div class="message">
-      <strong>Message:</strong>
-      {{statusMessage()}}
-    </div>
-    <div class="working-hours">
-      <strong>Within Working Hours: </strong>
-      @if (isWithinWorkingHours()) { Yes } @else {No}
-    </div>
-  </div>
+      <div class="demo-section">
+        <h2>Signal Inputs (Parent → Child)</h2>
+        <p>Data flows down from parent to child via signal inputs:</p>
 
-  <div class="status-controls">
-    <!-- TODO: Add (click) and [disabled] bindings -->
-    <button (click)="goOnline()">Go Online</button>
-    <button (click)="setAway()">Set Away</button>
-    <button (click)="goOffline()">Go Offline</button>
-    <button class="toggle-btn" (click)="togglStatus()">Toggle Status</button>
-  </div>
-</div>
-<div>
-      <h2>User Profile Loader</h2>
+        <!-- TODO: Change from static values to dynamic signal values -->
+        <product-card [name]="productName()" [price]="productPrice()" [available]="productAvailable()" />
 
-      <div>
-        <!-- TODO: Add (click) handlers to call loadUser() with appropriate IDs -->
-        <button (click)="loadUser(1)">Load User 1</button>
-        <button (click)="loadUser(2)">Load User 2</button>
-        <button (click)="loadUser(999)">Load Invalid User</button>
-        <!-- TODO: Add (click) handler to call reloadUser() -->
-        <button (click)="reloadUser()">Reload</button>
-      </div>
-
-      <div class="status">
-        @if (isLoading()) {
-          <p>Loading user...</p>
-        } @else if (hasError()) {
-          <p class="error">Error: {{ userResource.error()?.message}}</p>
-        } @else if (userResource.hasValue()) {
-          <div class="user-info">
-            <h3>{{userResource.value().name}}</h3>
-            <p>{{userResource.value().email}}</p>
-          </div>
-        }
-        <p>Click a button to load user data</p>
+        <!-- TODO: Add controls to test reactive updates -->
+        <div class="controls">
+          <button (click)="updateProduct()">Update Product Info</button>
+          <button (click)="toggleAvailability()">Toggle Availability</button>
+        </div>
       </div>
     </div>
