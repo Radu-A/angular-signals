@@ -3,6 +3,7 @@ import {
   Component,
   signal,
   computed,
+  linkedSignal,
   ChangeDetectionStrategy,
 } from "@angular/core";
 
@@ -14,7 +15,8 @@ import {
 })
 export class App {
   userStatus = signal<"online" | "away" | "offline">("offline");
-  notificationsEnabled = computed(() => this.userStatus() === "online");
+
+  notificationsEnabled = linkedSignal(() => this.userStatus() === "online");
   statusMessage = computed(() => {
     const status = this.userStatus();
     switch (status) {
@@ -58,5 +60,9 @@ export class App {
         this.userStatus.set("online");
         break;
     }
+  }
+
+  toggleNotifications() {
+    this.notificationsEnabled.set(!this.notificationsEnabled());
   }
 }

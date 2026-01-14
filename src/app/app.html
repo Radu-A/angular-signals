@@ -10,6 +10,13 @@
     <div class="notifications">
       <strong>Notifications:</strong>
       @if (notificationsEnabled()) { Eneabled } @else { Disabled }
+      <button class="override-btn" (click)="toggleNotifications()">
+        @if (notificationsEnabled()) {
+          Disable
+        } @else {
+          Enable
+        }
+      </button>
     </div>
     <div class="message">
       <strong>Message:</strong>
