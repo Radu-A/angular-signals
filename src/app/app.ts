@@ -1,52 +1,44 @@
-// TODO: Import viewChild from @angular/core
+// TODO: Import effect from @angular/core
 import {
   Component,
   signal,
   computed,
-  viewChild,
+  effect,
   ChangeDetectionStrategy,
 } from "@angular/core";
-import { CartSummary } from "./cart-summary";
-import { ProductCard } from "./product-card";
 
 @Component({
   selector: "app-root",
-  imports: [ProductCard, CartSummary],
   template: `
-    <div class="shopping-app">
-      <h1>Advanced Shopping Cart</h1>
+    <div [class]="themeClass()">
+      <h2>Theme Manager with Effects</h2>
 
       <div class="controls">
-        <button (click)="showFirstProductDetails()">
-          Show First Product Details
+        <button (click)="toggleTheme()">
+          Switch to @if (theme() === 'light') { Dark } @else { Light } Theme
         </button>
-        <button (click)="initiateCheckout()">Initiate Checkout</button>
+
+        @if (!isLoggedIn()) {
+        <button (click)="login()">Login</button>
+        } @else {
+        <button (click)="logout()">Logout</button>
+        }
       </div>
 
-      <div class="products">
-        <product-card
-          [name]="'Laptop'"
-          [price]="999"
-          [description]="'High-performance laptop'"
-          [available]="true"
-          [productId]="'LAP001'"
-          [category]="'Electronics'"
-        />
+      <div class="info">
+        <p>Current theme: {{ theme() }}</p>
+        <p>User: {{ username() }}</p>
+        <p>Status: @if (isLoggedIn()) { Logged in } @else { Logged out }</p>
       </div>
 
-      <div class="cart-section">
-        <cart-summary [itemCount]="cartQuantity()" [total]="totalPrice()" />
-
-        <div class="cart-controls">
-          <label>Quantity:</label>
-          <button (click)="updateQuantity(-1)" [disabled]="cartQuantity() <= 0">
-            -
-          </button>
-          <span class="quantity">{{ cartQuantity() }}</span>
-          <button (click)="updateQuantity(1)" [disabled]="cartQuantity() >= 10">
-            +
-          </button>
-        </div>
+      <div class="demo">
+        <p>Open the browser console to see the effects in action!</p>
+        <p>Effects will automatically:</p>
+        <ul>
+          <li>Save theme to localStorage</li>
+          <li>Log user activity changes</li>
+          <li>Run a timer every 5 seconds</li>
+        </ul>
       </div>
     </div>
   `,
@@ -54,33 +46,47 @@ import { ProductCard } from "./product-card";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  cartQuantity = signal(2);
+  theme =
+    signal<"light" | "dark">(
+      localStorage.getItem("theme") as "light" | "dark"
+    ) || "light";
+  username = signal("Guest");
+  isLoggedIn = signal(false);
 
-  firstProduct = viewChild(ProductCard);
-  cartSummary = viewChild(CartSummary);
+  themeClass = computed(() => `theme-${this.theme()}`);
 
-  totalPrice = computed(() => {
-    return this.cartQuantity() * 999;
-  });
-
-  updateQuantity(change: number) {
-    const newQuantity = this.cartQuantity() + change;
-    if (newQuantity >= 0 && newQuantity <= 10) {
-      this.cartQuantity.set(newQuantity);
-    }
+  constructor() {
+    effect(() => {
+      localStorage.setItem("theme", this.theme());
+      console.log("Theme saved to localStorage: ", this.theme());
+    });
+    effect(() => {
+      const status = this.isLoggedIn() ? "logged in" : "logged out";
+      const user = this.username();
+      console.log(`User ${user} is ${status}`);
+    });
+    effect((onCleanup) => {
+      const interval = setInterval(() => {
+        console.log("Timer tick - Current theme: ", this.theme());
+      }, 5000);
+      // onCleanup(() => {
+      //   clearInterval(interval);
+      //   console.log("Timer cleaned up");
+      // });
+    });
   }
 
-  showFirstProductDetails() {
-    const product = this.firstProduct();
-    if (product) {
-      product.highlight();
-    }
+  toggleTheme() {
+    this.theme.set(this.theme() === "light" ? "dark" : "light");
   }
 
-  initiateCheckout() {
-    const summary = this.cartSummary();
-    if (summary) {
-      summary.initiateCheckout();
-    }
+  login() {
+    this.username.set("John Doe");
+    this.isLoggedIn.set(true);
+  }
+
+  logout() {
+    this.username.set("Guest");
+    this.isLoggedIn.set(false);
   }
 }
