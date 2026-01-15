@@ -1,30 +1,27 @@
-// TODO: Import inject from @angular/core
-import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
-import { CartStore } from "./cart-store";
-import { CartDisplay } from "./cart-display";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { HighlightDirective } from "./highlight-directive";
 
 @Component({
   selector: "app-root",
-  imports: [CartDisplay],
+  imports: [HighlightDirective],
   template: `
-    <div class="shopping-app">
-      <header>
-        <h1>Signals with Services Demo</h1>
-        <div class="cart-badge">
-          Cart: {{ cartStore.totalQuantity() }} items (\${{
-            cartStore.totalPrice()
-          }})
-        </div>
-      </header>
+    <div>
+      <h1>Directive with Signals</h1>
 
-      <main>
-        <cart-display />
-      </main>
+      <div highlight color="blue" [intensity]="0.2">
+        Hover me - Blue highlight
+      </div>
+
+      <div highlight color="green" [intensity]="0.4">
+        Hover me - Green highlight
+      </div>
+
+      <div highlight color="yellow" [intensity]="0.6">
+        Hover me - Yellow highlight
+      </div>
     </div>
   `,
   styleUrl: "./app.css",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {
-  cartStore = inject(CartStore);
-}
+export class App {}
